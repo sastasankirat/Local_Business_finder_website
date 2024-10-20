@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Local Business Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Additional CSS for the search results page */
+        #results {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        #business-list {
+            flex: 1;
+            margin-right: 20px;
+            min-width: 300px; /* Ensure a minimum width for responsiveness */
+        }
+
+        .business-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .business-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .business-item h3 {
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .business-item p {
+            margin: 0;
+            color: #555;
+        }
+
+        #map {
+            flex: 2;
+            height: 500px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            #results {
+                flex-direction: column;
+            }
+
+            #business-list {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="register.html">Register Business</a></li>
+                <li><a href="search.html">Search Business</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#featured">Featured</a></li>
+                <li><a href="#members">Our Team</a></li>
+                <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="results">
+        <div id="business-list">
+            <div class="business-item">
+                <h3>Business Name 1</h3>
+                <p>Category: Restaurant</p>
+                <p>Location: 123 Main St, City, State</p>
+            </div>
+            <div class="business-item">
+                <h3>Business Name 2</h3>
+                <p>Category: Shopping</p>
+                <p>Location: 456 Market St, City, State</p>
+            </div>
+            <div class="business-item">
+                <h3>Business Name 3</h3>
+                <p>Category: Technology</p>
+                <p>Location: 789 Tech Ave, City, State</p>
+            </div>
+            <div class="business-item">
+                <h3>Business Name 4</h3>
+                <p>Category: Healthcare</p>
+                <p>Location: 321 Health Blvd, City, State</p>
+            </div>
+           
+        </div>
+
+        <div id="map"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Local Business Finder. All rights reserved.</p>
+    </footer>
+
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+       
+        function initMap() {
+            // Map options
+            var options = {
+                zoom: 10,
+                center: { lat: YOUR_LATITUDE, lng: YOUR_LONGITUDE } // Set your initial map center
+            }
+
+            // New map
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            // Array of businesses
+            var businesses = [
+                {
+                    name: 'Business Name 1',
+                    category: 'Restaurant',
+                    location: '123 Main St, City, State',
+                    lat: YOUR_LATITUDE_1,
+                    lng: YOUR_LONGITUDE_1
+                },
+                {
+                    name: 'Business Name 2',
+                    category: 'Shopping',
+                    location: '456 Market St, City, State',
+                    lat: YOUR_LATITUDE_2,
+                    lng: YOUR_LONGITUDE_2
+                },
+                {
+                    name: 'Business Name 3',
+                    category: 'Technology',
+                    location: '789 Tech Ave, City, State',
+                    lat: YOUR_LATITUDE_3,
+                    lng: YOUR_LONGITUDE_3
+                },
+                {
+                    name: 'Business Name 4',
+                    category: 'Healthcare',
+                    location: '321 Health Blvd, City, State',
+                    lat: YOUR_LATITUDE_4,
+                    lng: YOUR_LONGITUDE_4
+                }
+                // Add more businesses as needed
+            ];
+
+            // Loop through businesses and add markers
+            businesses.forEach(function (business) {
+                addMarker({
+                    coords: { lat: business.lat, lng: business.lng },
+                    content: `<h3>${business.name}</h3><p>${business.location}</p>`
+                });
+            });
+
+            // Add marker function
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    map: map
+                });
+
+                // Check for content
+                if (props.content) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>

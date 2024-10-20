@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Profile - Local Business Finder</title>
+    <!-- External CSS links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Basic styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        header img {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .profile-card img {
+            max-width: 150px;
+            border-radius: 8px;
+        }
+
+        .profile-details {
+            flex: 1;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #007bff;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .profile-info p {
+            background-color: #f4f7fa;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 0;
+            flex: 1;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-info label {
+                margin-bottom: 5px;
+            }
+
+            .profile-info p {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Your Business Profile</h1>
+        <!-- Placeholder image for business header, update source path accordingly -->
+        <img src="path/to/your/header-image.jpg" alt="Business Header Image">
+    </header>
+
+    <div class="container">
+        <div class="profile-card">
+            <!-- Placeholder for the business photo -->
+            <img id="businessPhoto" src="path/to/business-photo.jpg" alt="Business Photo">
+            <div class="profile-details">
+                <!-- Dynamic business details -->
+                <div class="profile-info">
+                    <i class="fas fa-building"></i>
+                    <label for="businessName">Business Name:</label>
+                    <p id="businessName">N/A</p>
+                </div>
+                <div class="profile-info">
+                    <i class="fas fa-envelope"></i>
+                    <label for="email">Email:</label>
+                    <p id="email">N/A</p>
+                </div>
+                <div class="profile-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <label for="address">Address:</label>
+                    <p id="address">N/A</p>
+                </div>
+                <div class="profile-info">
+                    <i class="fas fa-phone"></i>
+                    <label for="phone">Phone:</label>
+                    <p id="phone">N/A</p>
+                </div>
+                <div class="profile-info">
+                    <i class="fas fa-concierge-bell"></i>
+                    <label for="services">Services Provided:</label>
+                    <p id="services">N/A</p>
+                </div>
+                <div class="profile-info">
+                    <i class="fas fa-clock"></i>
+                    <label for="hours">Business Hours:</label>
+                    <p id="hours">N/A</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button to return to the registration page -->
+        <a href="register.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Register</a>
+    </div>
+
+    <script>
+        // Function to get query parameters from the URL
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const queryArray = queryString.split('&');
+
+            queryArray.forEach(param => {
+                const [key, value] = param.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+
+            return params;
+        }
+
+        // Populate profile page with details from query parameters
+        const params = getQueryParams();
+        document.getElementById('businessName').innerText = params.businessName || 'N/A';
+        document.getElementById('email').innerText = params.email || 'N/A';
+        document.getElementById('address').innerText = params.address || 'N/A';
+        document.getElementById('phone').innerText = params.phone || 'N/A';
+        
+        document.getElementById('services').innerText = params.services || 'N/A';
+        document.getElementById('hours').innerText = params.hours || 'N/A';
+        document.getElementById('businessPhoto').src = params.businessPhoto || 'path/to/default-image.jpg';
+    </script>
+
+</body>
+
+</html>
