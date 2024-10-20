@@ -1,0 +1,30 @@
+{
+  "name": "local-business-finder",
+  "version": "1.0.0",
+  "description": "npm install express mongoose cors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kishorkanse11/Local_Business_Finder.git"
+  },
+  "keywords": [
+    "echo",
+    "\"Running",
+    "tests\""
+  ],
+  "author": "kishor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kishorkanse11/Local_Business_Finder/issues"
+  },
+  "homepage": "https://github.com/Kishorkanse11/Local_Business_Finder#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2"
+  }
+}
