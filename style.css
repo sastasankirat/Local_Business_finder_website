@@ -1302,3 +1302,13 @@ footer {
     to { opacity: 1; }
 }
 
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .hero-section {
+        background-size: cover;
+        text-align: center;
+    }
+}

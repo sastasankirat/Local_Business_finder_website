@@ -1,0 +1,132 @@
+/* Base styles for body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* Default font size */
+    line-height: 1.5;
+}
+
+/* Container styles */
+.container {
+    width: 100%;
+    padding: 0 20px; /* Add padding for small screens */
+}
+
+/* Header styles */
+.header {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logo {
+    max-width: 100%; /* Responsive logo */
+    height: auto;
+}
+
+/* Navigation Menu */
+.navigation-menu {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    padding: 10px 0;
+}
+
+.navigation-menu a {
+    text-decoration: none;
+    padding: 10px 15px;
+    color: #333;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation-menu {
+        flex-direction: column; /* Stack items on small screens */
+        align-items: center; /* Center menu items */
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    background-image: url('path/to/your/background.jpg'); /* Use a relevant background */
+    background-size: cover; /* Cover the section */
+    background-position: center; /* Center the background */
+    height: 250px; /* Height for mobile view */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 24px; /* Heading size for mobile */
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    text-align: center;
+    text-decoration: none; /* No underline */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker on hover */
+}
+
+/* Image styles */
+img {
+    max-width: 100%; /* Ensure images are responsive */
+    height: auto;
+}
+
+/* Section styling */
+.section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for sections */
+    border-radius: 5px;
+}
+
+/* Footer styling */
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: white;
+}
+
+/* Media queries for mobile responsiveness */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .hero-section {
+        height: 200px; /* Smaller height for mobile */
+    }
+
+    .section {
+        padding: 15px; /* Reduced padding for sections */
+    }
+
+    .footer {
+        font-size: 12px; /* Smaller footer text */
+    }
+}
+
+/* Hide non-essential elements on mobile */
+.desktop-only {
+    display: none; /* Hide on mobile */
+}
+
+.mobile-only {
+    display: block; /* Show mobile-specific elements */
+}

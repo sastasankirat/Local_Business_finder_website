@@ -25,6 +25,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "local-business-finder": "file:",
     "mongoose": "^8.7.2"
   }
 }

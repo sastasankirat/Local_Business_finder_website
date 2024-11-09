@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Business - Local Business Finder</title>
+    <title>Business Registration - Local Business Finder</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fa;
             margin: 0;
             padding: 0;
         }
@@ -17,205 +20,199 @@
             background-color: #007bff;
             color: white;
             text-align: center;
-            padding: 40px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 50px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
-        h1 {
+        header h1 {
             margin: 0;
-            font-size: 28px;
-            letter-spacing: 1.2px;
+            font-size: 32px;
+            font-weight: 700;
         }
 
         .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 15px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="file"],
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d3d3d3;
-            border-radius: 5px;
+        .form-group {
+            display: flex;
+            flex-direction: column;
             margin-bottom: 20px;
-            font-size: 15px;
-            color: #555;
-            transition: border-color 0.3s ease;
         }
 
-        input:focus, textarea:focus {
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-size: 16px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
             border-color: #007bff;
             outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
 
-        button {
+        .form-group i {
+            position: absolute;
+            margin-top: 45px;
+            margin-left: 10px;
+            color: #007bff;
+        }
+
+        .form-group .form-input {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: calc(100% - 30px);
+            padding-left: 30px;
+        }
+
+        .submit-btn {
+            display: inline-block;
             width: 100%;
             padding: 15px;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
+            transition: background-color 0.3s;
         }
 
-        button:hover {
+        .submit-btn:hover {
             background-color: #0056b3;
-            transform: scale(1.02);
         }
 
-        .back-button {
+        .back-link {
             display: inline-block;
-            margin-top: 20px;
-            text-align: center;
             text-decoration: none;
             color: #007bff;
-            font-size: 15px;
+            font-weight: 500;
+            margin-top: 20px;
         }
 
-        .back-button:hover {
-            color: #0056b3;
+        .back-link:hover {
+            text-decoration: underline;
         }
 
-        .form-group {
-            position: relative;
+        .photo-preview {
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            display: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-        input[type="file"]::file-selector-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="file"]::file-selector-button:hover {
-            background-color: #0056b3;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                margin: 20px;
+            header h1 {
+                font-size: 28px;
             }
 
-            header {
-                padding: 20px 0;
+            .form-group input,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 14px;
             }
 
-            h1 {
-                font-size: 24px;
+            .submit-btn {
+                padding: 12px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Register Your Business</h1>
-</header>
+    <header>
+        <h1>Register Your Business</h1>
+    </header>
 
-<div class="container">
-    <form id="registrationForm" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="businessName">Business Name:</label>
-            <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required>
-        </div>
+    <div class="container">
+        <form action="profile.html" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="businessName">Business Name</label>
+                <div class="form-input">
+                    <i class="fas fa-building"></i>
+                    <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-        </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="form-input">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" placeholder="Enter your business address" required>
-        </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="form-input">
+                    <i class="fas fa-phone-alt"></i>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-        </div>
+            <div class="form-group">
+                <label for="address">Business Address</label>
+                <div class="form-input">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" id="address" name="address" placeholder="Enter your business address" required>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="services">Services Provided:</label>
-            <textarea id="services" name="services" rows="4" placeholder="Describe the services you provide" required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="services">Services Provided</label>
+                <div class="form-input">
+                    <i class="fas fa-concierge-bell"></i>
+                    <textarea id="services" name="services" rows="3" placeholder="Describe your services" required></textarea>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="hours">Business Hours:</label>
-            <input type="text" id="hours" name="hours" placeholder="e.g. Mon-Fri: 9AM - 6PM" required>
-        </div>
+            <div class="form-group">
+                <label for="businessPhoto">Business Photo</label>
+                <input type="file" id="businessPhoto" name="businessPhoto" accept="image/*" onchange="previewPhoto(event)">
+                <img id="photoPreview" class="photo-preview" alt="Photo Preview">
+            </div>
 
-        <div class="form-group">
-            <label for="businessPhoto">Upload Business Photo:</label>
-            <input type="file" id="businessPhoto" name="businessPhoto" accept="image/*" required>
-        </div>
+            <button type="submit" class="submit-btn">Register Business</button>
 
-        <button type="submit">Register</button>
-    </form>
+            <a href="profile.html" class="back-link"><i class="fas fa-arrow-left"></i> View Profile</a>
+        </form>
+    </div>
 
-    <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
-</div>
-
-<script>
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent form submission
-
-        // Get form values
-        const businessName = document.getElementById('businessName').value;
-        const email = document.getElementById('email').value;
-        const address = document.getElementById('address').value;
-        const phone = document.getElementById('phone').value;
-        const services = document.getElementById('services').value;
-        const hours = document.getElementById('hours').value;
-        const businessPhoto = document.getElementById('businessPhoto').files[0];
-
-        // Create FormData to include file upload
-        const formData = new FormData();
-        formData.append('businessName', businessName);
-        formData.append('email', email);
-        formData.append('address', address);
-        formData.append('phone', phone);
-        formData.append('services', services);
-        formData.append('hours', hours);
-        formData.append('businessPhoto', businessPhoto);
-
-        // Prepare to send data to profile.html using URL parameters
-        const queryParams = new URLSearchParams({
-            businessName: businessName,
-            email: email,
-            address: address,
-            phone: phone,
-            services: services,
-            hours: hours,
-            businessPhoto: encodeURIComponent(URL.createObjectURL(businessPhoto)) // Create URL for the uploaded photo
-        });
-
-        // Redirect to profile.html with query parameters
-        window.location.href = `profile.html?${queryParams.toString()}`;
-    });
-</script>
+    <script>
+        function previewPhoto(event) {
+            const photoPreview = document.getElementById('photoPreview');
+            photoPreview.src = URL.createObjectURL(event.target.files[0]);
+            photoPreview.style.display = 'block';
+        }
+    </script>
 
 </body>
+
 </html>

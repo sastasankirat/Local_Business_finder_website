@@ -5,14 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const addCategoryButton = document.getElementById('add-category');
     const newCategoryInput = document.getElementById('new-category');
 
+    // Show/hide 'other' category input field
     businessCategorySelect.addEventListener('change', () => {
-        if (businessCategorySelect.value === 'other') {
-            otherCategorySection.style.display = 'block';
-        } else {
-            otherCategorySection.style.display = 'none';
-        }
+        otherCategorySection.style.display = businessCategorySelect.value === 'other' ? 'block' : 'none';
     });
 
+    // Add new category
     addCategoryButton.addEventListener('click', async () => {
         const newCategory = newCategoryInput.value.trim();
         if (newCategory) {
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Registration button event listener
+    // Register new business
     const registerButton = document.getElementById('register-button');
     registerButton.addEventListener('click', async () => {
         const formData = new FormData(businessForm);
@@ -60,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (result.success) {
                 showToast('Registration successful!', 'success');
-                // Redirect to profile or other page
                 window.location.href = '/profile';
             } else {
                 showToast(result.message, 'error');
@@ -71,11 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-let map;
-let service;
-let infowindow;
-let markers = [];
+let map, service, infowindow, markers = [];
 
+// Initialize Google Map
 function initMap() {
     const initialLocation = { lat: 18.5204, lng: 73.8567 }; // Pune, Maharashtra
     infowindow = new google.maps.InfoWindow();
@@ -83,21 +78,16 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: initialLocation,
         zoom: 12,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true,
-        zoomControl: true,
-        styles: [
-            // Add custom map styling here if desired
-        ]
+        zoomControl: true
     });
 
     service = new google.maps.places.PlacesService(map);
 
-    const input = document.getElementById('location');
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'));
     autocomplete.bindTo('bounds', map);
 
-    document.getElementById('search-button').addEventListener('click', function () {
+    document.getElementById('search-button').addEventListener('click', () => {
         clearMarkers();
         searchBusinesses();
     });
@@ -105,44 +95,42 @@ function initMap() {
     loadDefaultBusinesses(initialLocation);
 }
 
+// Load default businesses on map
 function loadDefaultBusinesses(location) {
     const request = {
         location: location,
         radius: '5000',
         type: ['store']
     };
-    service.nearbySearch(request, function (results, status) {
+    service.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (let i = 0; i < results.length; i++) {
-                createMarker(results[i]);
-            }
+            results.forEach(result => createMarker(result));
         }
     });
 }
 
+// Search businesses by name, category, and location
 function searchBusinesses() {
     const businessName = document.getElementById('business-name').value;
     const businessCategory = document.getElementById('business-category').value;
     const location = document.getElementById('location').value;
 
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': location }, function (results, status) {
+    geocoder.geocode({ 'address': location }, (results, status) => {
         if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
 
+            // Create search request for Google Places API
             const request = {
                 location: results[0].geometry.location,
                 radius: '5000',
-                keyword: businessName,
-                type: businessCategory ? [businessCategory] : []
+                keyword: businessName, // Search by business name
+                type: businessCategory ? [businessCategory] : [] // Search by category
             };
 
-            service.nearbySearch(request, function (results, status) {
+            service.nearbySearch(request, (results, status) => {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    map.setZoom(14);
-                    for (let i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
-                    }
+                    results.forEach(result => createMarker(result));
                     clusterMarkers();
                 } else {
                     showToast('No businesses found.', 'warning');
@@ -154,6 +142,7 @@ function searchBusinesses() {
     });
 }
 
+// Create a marker on the map
 function createMarker(place) {
     const marker = new google.maps.Marker({
         map: map,
@@ -163,33 +152,34 @@ function createMarker(place) {
 
     markers.push(marker);
 
-    google.maps.event.addListener(marker, 'click', function () {
-        infowindow.setContent(
-            `<div><strong>${place.name}</strong><br>
-            Rating: ${place.rating || 'N/A'}<br>
-            <img src="${place.photos ? place.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 }) : ''}" alt="Business Image"><br>
-            ${place.vicinity}</div>`
-        );
-        infowindow.open(map, this);
+    google.maps.event.addListener(marker, 'click', () => {
+        infowindow.setContent(`
+            <div>
+                <strong>${place.name}</strong><br>
+                Rating: ${place.rating || 'N/A'}<br>
+                <img src="${place.photos ? place.photos[0].getUrl({ maxWidth: 200, maxHeight: 200 }) : ''}" alt="Business Image"><br>
+                ${place.vicinity}
+            </div>
+        `);
+        infowindow.open(map, marker);
     });
 }
 
+// Clear all markers on the map
 function clearMarkers() {
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-    }
+    markers.forEach(marker => marker.setMap(null));
     markers = [];
 }
 
+// Cluster markers if too many are close together
 function clusterMarkers() {
     new MarkerClusterer(map, markers, {
         imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
 }
 
+// Show toast notifications
 function showToast(message, type) {
-    // Implement a function to show toast notifications
-    // type can be 'success', 'error', 'warning'
     console.log(`[${type.toUpperCase()}] ${message}`);
 }
 
