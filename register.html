@@ -67,13 +67,6 @@
             outline: none;
         }
 
-        .form-group i {
-            position: absolute;
-            margin-top: 45px;
-            margin-left: 10px;
-            color: #007bff;
-        }
-
         .form-group .form-input {
             display: flex;
             align-items: center;
@@ -97,11 +90,16 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s ease;
         }
 
         .submit-btn:hover {
             background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
         }
 
         .back-link {
@@ -141,78 +139,145 @@
                 padding: 12px;
                 font-size: 16px;
             }
+
+            .container {
+                padding: 20px;
+            }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Register Your Business</h1>
-    </header>
+<header>
+    <h1>Register Your Business</h1>
+</header>
 
-    <div class="container">
-        <form action="profile.html" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="businessName">Business Name</label>
-                <div class="form-input">
-                    <i class="fas fa-building"></i>
-                    <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required>
-                </div>
+<div class="container">
+    <form id="registrationForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="businessName">Business Name</label>
+            <div class="form-input">
+                <i class="fas fa-building"></i>
+                <input type="text" id="businessName" name="businessName" placeholder="Enter your business name" required>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <div class="form-input">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-                </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="form-input">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <div class="form-input">
-                    <i class="fas fa-phone-alt"></i>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-                </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <div class="form-input">
+                <i class="fas fa-phone-alt"></i>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="address">Business Address</label>
-                <div class="form-input">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" id="address" name="address" placeholder="Enter your business address" required>
-                </div>
+        <div class="form-group">
+            <label for="address">Business Address</label>
+            <div class="form-input">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="address" name="address" placeholder="Enter your business address" required>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="services">Services Provided</label>
-                <div class="form-input">
-                    <i class="fas fa-concierge-bell"></i>
-                    <textarea id="services" name="services" rows="3" placeholder="Describe your services" required></textarea>
-                </div>
+        <div class="form-group">
+            <label for="services">Services Provided</label>
+            <div class="form-input">
+                <i class="fas fa-concierge-bell"></i>
+                <textarea id="services" name="services" rows="3" placeholder="Describe your services" required></textarea>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="businessPhoto">Business Photo</label>
-                <input type="file" id="businessPhoto" name="businessPhoto" accept="image/*" onchange="previewPhoto(event)">
-                <img id="photoPreview" class="photo-preview" alt="Photo Preview">
-            </div>
+        <div class="form-group">
+            <label for="businessPhoto">Business Photo</label>
+            <input type="file" id="businessPhoto" name="businessPhoto" accept="image/*" onchange="previewPhoto(event)">
+            <img id="photoPreview" class="photo-preview" alt="Photo Preview">
+        </div>
 
-            <button type="submit" class="submit-btn">Register Business</button>
+        <button type="submit" class="submit-btn">Register Business</button>
 
-            <a href="profile.html" class="back-link"><i class="fas fa-arrow-left"></i> View Profile</a>
-        </form>
-    </div>
+        <a href="profile.html" class="back-link"><i class="fas fa-arrow-left"></i> View Profile</a>
 
-    <script>
-        function previewPhoto(event) {
-            const photoPreview = document.getElementById('photoPreview');
-            photoPreview.src = URL.createObjectURL(event.target.files[0]);
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner"></div>
+    </form>
+</div>
+
+<script>
+    function previewPhoto(event) {
+        const photoPreview = document.getElementById('photoPreview');
+        const file = event.target.files[0];
+        if (file) {
+            photoPreview.src = URL.createObjectURL(file);
             photoPreview.style.display = 'block';
+        } else {
+            photoPreview.style.display = 'none';
+            photoPreview.src = '';
         }
-    </script>
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Show the loading spinner
+        loadingSpinner.style.display = 'block';
+
+        // Hide the submit button
+        document.querySelector('.submit-btn').disabled = true;
+
+        fetch('http://localhost:8080/api/businesses/register', {
+    method: 'POST',
+    body: formData
+})
+
+        .then(response => response.json())
+        .then(data => {
+            // Hide the loading spinner
+            loadingSpinner.style.display = 'none';
+            document.querySelector('.submit-btn').disabled = false;
+
+            if (data.success) {
+                alert('Business registered successfully!');
+                window.location.href = 'profile.html';  // Redirect to profile page
+            } else {
+                alert(data.message || 'Error registering business.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            loadingSpinner.style.display = 'none';
+            document.querySelector('.submit-btn').disabled = false;
+            alert('Submission failed. Please try again later.');
+        });
+    });
+</script>
 
 </body>
-
 </html>
